@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Wears Nona — soft feminine fashion. Thoughtfully crafted pieces for everyday elegance. Shop Aluna Pleats & Naya Pleats."/>
+<meta name="keywords" content="wears nona, fashion wanita, pleated top, feminine fashion, indonesia fashion"/>
+<meta name="author" content="Wears Nona"/>
+<meta name="theme-color" content="#F7E7EC"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Wears Nona — Love From Nona"/>
+<meta property="og:description" content="Thoughtfully crafted feminine fashion for every chapter of your everyday life."/>
+<meta property="og:image" content="assets/products/aluna-pleats/1.jpg"/>
+<meta property="og:url" content="https://wearsnona.github.io"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<title>Wears Nona — Love From Nona</title>
+<link rel="icon" type="image/png" href="assets/logo/logo.png"/>
+<link rel="apple-touch-icon" href="assets/logo/logo.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+  LOADING SCREEN
+══════════════════════════════════════ -->
+<div id="loader" aria-hidden="true">
+  <img src="assets/logo/logo.png" alt="Wears Nona" class="loader-logo"/>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SIZE CHART MODAL
+══════════════════════════════════════ -->
+<div id="size-modal" role="dialog" aria-modal="true" aria-label="Size Chart" onclick="closeSizeChart(event)">
+  <div class="size-modal-box">
+    <button class="size-modal-close" onclick="closeSizeChart()" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <img id="size-chart-img" src="" alt="Size Chart" onerror="this.style.display='none'; document.getElementById('size-chart-missing').style.display='block';"/>
+    <p id="size-chart-missing" style="display:none;padding:2rem;text-align:center;font-size:.8rem;color:var(--stone);">Size chart image coming soon.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  ANNOUNCEMENT BAR
+══════════════════════════════════════ -->
+<div id="announcement-bar" role="note">
+  <span><span class="ann-spark" aria-hidden="true">✨</span> Official Launch — Special Launch Price Rp155.000 &amp; Free Shipping <span class="ann-spark" aria-hidden="true">✨</span></span>
+</div>
+
+<!-- ══════════════════════════════════════
+  LAUNCH CAMPAIGN POPUP
+══════════════════════════════════════ -->
+<div id="launch-popup" role="dialog" aria-modal="true" aria-label="Wears Nona Official Launch" onclick="closeLaunchPopup(event)">
+  <div class="launch-popup-box">
+    <button class="launch-popup-close" onclick="closeLaunchPopup()" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div class="launch-popup-deco" aria-hidden="true">✨</div>
+    <p class="launch-popup-eyebrow">Wears Nona</p>
+    <h2 class="launch-popup-title">Official Launch</h2>
+    <p class="launch-popup-sub">Celebrate our first collection with a special launching offer.</p>
+
+    <div class="launch-popup-price-box">
+      <span class="launch-popup-price-label">Special Launch Price</span>
+      <div class="launch-popup-price-row">
+        <span class="launch-popup-old">Rp165.000</span>
+        <span class="launch-popup-new">Rp155.000</span>
+      </div>
+      <span class="launch-popup-ship">🚚 Free Shipping</span>
+    </div>
+
+    <p class="launch-popup-note">Limited-time offer during our official launch.</p>
+    <p class="launch-popup-thanks">
+      Thank you for supporting our very first collection.<br>
+      <em>Love From Nona 🤍</em>
+    </p>
+    <button class="launch-popup-cta" onclick="closeLaunchPopup();goHome();document.getElementById('collection')?.scrollIntoView({behavior:'smooth'});">
+      Shop the Collection
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  WISHLIST SIDEBAR
+══════════════════════════════════════ -->
+<div id="wishlist-overlay" onclick="toggleWishlist()" aria-hidden="true"></div>
+<aside id="wishlist-drawer" aria-label="Wishlist">
+  <div class="drawer-header">
+    <h2 class="drawer-title">My Wishlist</h2>
+    <button onclick="toggleWishlist()" aria-label="Close wishlist">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M1 1l14 14M15 1L1 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+  <div id="wishlist-items"></div>
+</aside>
+
+<!-- ══════════════════════════════════════
+  GLOBAL NAV
+══════════════════════════════════════ -->
+<nav id="nav" role="navigation" aria-label="Main navigation">
+  <button class="nav-logo" onclick="goHome()" aria-label="Wears Nona — Home">
+    <img class="nav-logo-img" src="assets/logo/logo.png" alt="Wears Nona"/>
+  </button>
+  <div class="nav-r">
+    <button class="nav-icon-btn" onclick="toggleWishlist()" aria-label="Wishlist">
+      <svg width="18" height="17" viewBox="0 0 18 17" fill="none">
+        <path d="M9 15.5S1 10.5 1 5a4 4 0 018 0 4 4 0 018 0c0 5.5-8 10.5-8 10.5z"
+              stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="nav-badge" id="wishlist-count" style="display:none">0</span>
+    </button>
+    <button class="nav-cart-btn" onclick="goCart()" aria-label="Shopping cart">
+      <svg width="16" height="15" viewBox="0 0 16 15" fill="none">
+        <path d="M1 1.5h2l1.6 7h6.8l1.6-5.5H4.2"
+              stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="6.5" cy="13" r="1" fill="currentColor"/>
+        <circle cx="11" cy="13" r="1" fill="currentColor"/>
+      </svg>
+      <span id="cart-label">Cart</span>
+      <span class="cart-badge" id="nav-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+  PAGE — HOME
+══════════════════════════════════════ -->
+<main class="page active" id="page-home">
+
+  <!-- ── HERO SLIDESHOW ── -->
+  <section id="hero" aria-label="Hero">
+    <div class="hero-slides" id="hero-slides">
+
+      <!-- Slide 1: Aluna -->
+      <div class="hero-slide active" data-product="aluna-pleats">
+        <div class="hero-img-col">
+          <img src="assets/products/aluna-pleats/1.jpg"
+               alt="Aluna Pleats — Wears Nona"
+               loading="eager" fetchpriority="high"/>
+          <span class="hero-img-label">Aluna Pleats</span>
+        </div>
+        <div class="hero-text-col">
+          <span class="hero-deco" aria-hidden="true">01</span>
+          <div class="hero-content">
+            <p class="hero-eyebrow">Pleated Series · 2026</p>
+            <h1 class="hero-h1">
+              <span class="hero-wordmark">Wears <em>Nona</em></span>
+            </h1>
+            <p class="hero-tagline">Love From Nona</p>
+            <p class="hero-sub">
+              Soft, feminine, and effortlessly you.
+              The Aluna Pleats — made for women who move through life with grace.
+            </p>
+            <div class="hero-actions">
+              <button class="btn-dark" onclick="openProduct('aluna-pleats')">Shop Aluna Pleats</button>
+              <button class="btn-ghost" onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})">View All</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: Naya -->
+      <div class="hero-slide" data-product="naya-pleats">
+        <div class="hero-img-col">
+          <img src="assets/products/naya-pleats/1.jpg"
+               alt="Naya Pleats — Wears Nona"
+               loading="eager"/>
+          <span class="hero-img-label">Naya Pleats</span>
+        </div>
+        <div class="hero-text-col">
+          <span class="hero-deco" aria-hidden="true">02</span>
+          <div class="hero-content">
+            <p class="hero-eyebrow">Pleated Series · 2026</p>
+            <h1 class="hero-h1">
+              <span class="hero-wordmark">Wears <em>Nona</em></span>
+            </h1>
+            <p class="hero-tagline">Love From Nona</p>
+            <p class="hero-sub">
+              Clean lines, quiet confidence.
+              The Naya Pleats — your everyday companion from campus to coffee dates.
+            </p>
+            <div class="hero-actions">
+              <button class="btn-dark" onclick="openProduct('naya-pleats')">Shop Naya Pleats</button>
+              <button class="btn-ghost" onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})">View All</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Slide controls -->
+    <div class="hero-controls" aria-label="Slideshow controls">
+      <button class="hero-dot on" onclick="goSlide(0)" aria-label="Slide 1"></button>
+      <button class="hero-dot" onclick="goSlide(1)" aria-label="Slide 2"></button>
+    </div>
+    <button class="hero-arr hero-arr-l" onclick="heroStep(-1)" aria-label="Previous slide">
+      <svg width="9" height="16" viewBox="0 0 9 16"><path d="M7.5 1.5L2 8l5.5 6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    </button>
+    <button class="hero-arr hero-arr-r" onclick="heroStep(1)" aria-label="Next slide">
+      <svg width="9" height="16" viewBox="0 0 9 16"><path d="M1.5 1.5L7 8l-5.5 6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    </button>
+  </section>
+
+  <!-- ── MARQUEE ── -->
+  <div class="marquee" aria-hidden="true" role="presentation">
+    <div class="marquee-track">
+      <span class="mi">Aluna Pleats <span class="mi-dot">✦</span></span>
+      <span class="mi">Naya Pleats <span class="mi-dot">✦</span></span>
+      <span class="mi">Love From Nona <span class="mi-dot">✦</span></span>
+      <span class="mi">Pleated Series 2026 <span class="mi-dot">✦</span></span>
+      <span class="mi">Soft Feminine Fashion <span class="mi-dot">✦</span></span>
+      <span class="mi">Made in Indonesia <span class="mi-dot">✦</span></span>
+      <span class="mi">Aluna Pleats <span class="mi-dot">✦</span></span>
+      <span class="mi">Naya Pleats <span class="mi-dot">✦</span></span>
+      <span class="mi">Love From Nona <span class="mi-dot">✦</span></span>
+      <span class="mi">Pleated Series 2026 <span class="mi-dot">✦</span></span>
+      <span class="mi">Soft Feminine Fashion <span class="mi-dot">✦</span></span>
+      <span class="mi">Made in Indonesia <span class="mi-dot">✦</span></span>
+    </div>
+  </div>
+
+  <!-- ── COLLECTION ── -->
+  <section class="col-section" id="collection" aria-label="Collection">
+    <div class="col-header">
+      <div>
+        <p class="col-eyebrow">The Collection</p>
+        <h2 class="col-title">Pleated Series</h2>
+      </div>
+      <span class="col-num" aria-hidden="true">02</span>
+    </div>
+    <div class="pgrid" id="pgrid" role="list"></div>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section class="about-section" id="about" aria-label="About Wears Nona">
+    <div class="about-img">
+      <img src="assets/products/aluna-pleats/3.jpg" alt="Wears Nona — About" loading="lazy"/>
+    </div>
+    <div class="about-body">
+      <p class="about-eyebrow">About Wears Nona</p>
+      <h2 class="about-h2">
+        Femininity,<br>
+        <em>effortlessly yours.</em>
+      </h2>
+      <p class="about-p">
+        Wears Nona believes that femininity should feel effortless, confident, and timeless.
+        We create thoughtfully crafted pieces using high-quality materials in exclusive,
+        limited collections — designed to accompany women through every chapter of their
+        everyday lives with elegance and ease.
+      </p>
+      <div class="about-collections" role="list">
+        <button class="about-coll-card" role="listitem" onclick="openProduct('aluna-pleats')" aria-label="Shop Aluna Pleats">
+          <span class="about-coll-img">
+            <img src="assets/products/aluna-pleats/1.jpg" alt="Aluna Pleats" loading="lazy"/>
+          </span>
+          <span class="about-coll-name">Aluna Pleats</span>
+          <span class="about-coll-link">Shop Now →</span>
+        </button>
+        <button class="about-coll-card" role="listitem" onclick="openProduct('naya-pleats')" aria-label="Shop Naya Pleats">
+          <span class="about-coll-img">
+            <img src="assets/products/naya-pleats/1.jpg" alt="Naya Pleats" loading="lazy"/>
+          </span>
+          <span class="about-coll-name">Naya Pleats</span>
+          <span class="about-coll-link">Shop Now →</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHY CHOOSE ── -->
+  <section class="why-section" aria-label="Why Choose Wears Nona">
+    <div class="why-header">
+      <p class="col-eyebrow">Why Choose Us</p>
+      <h2 class="col-title">Designed with intention.</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+          </svg>
+        </div>
+        <h3 class="why-title">Thoughtfully Designed</h3>
+        <p class="why-p">Designed with care to create feminine, flattering, and comfortable silhouettes.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </div>
+        <h3 class="why-title">Premium Fabric</h3>
+        <p class="why-p">Soft chiffon ceruty with full lining for breathable comfort and a non-see-through finish.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+          </svg>
+        </div>
+        <h3 class="why-title">Limited Collection</h3>
+        <p class="why-p">Made in limited quantities, making every piece feel more exclusive.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22V12m0 0L6 6m6 6l6-6"/><circle cx="12" cy="4" r="2"/>
+          </svg>
+        </div>
+        <h3 class="why-title">Soft, Feminine &amp; Effortless</h3>
+        <p class="why-p">Easy-to-wear designs that bring elegance and confidence to every occasion.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOLLOW JOURNEY ── -->
+  <section class="follow-section" aria-label="Follow Our Journey">
+    <div class="follow-inner">
+      <p class="col-eyebrow" style="text-align:center;">Follow Our Journey</p>
+      <h2 class="follow-h2">@wearsnona</h2>
+      <p class="follow-p">Stay in the loop with our latest drops, styling inspo, and behind-the-scenes moments.</p>
+      <div class="follow-btns">
+        <a class="follow-btn" href="https://instagram.com/wearsnona" target="_blank" rel="noopener" aria-label="Follow on Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+          Instagram
+        </a>
+        <a class="follow-btn" href="https://tiktok.com/@wearsnona" target="_blank" rel="noopener" aria-label="Follow on TikTok">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.78a4.85 4.85 0 01-1.01-.09z"/>
+          </svg>
+          TikTok
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer role="contentinfo">
+    <div class="foot-grid">
+      <div class="foot-brand-col">
+        <img class="foot-logo-img" src="assets/logo/logo.png" alt="Wears Nona"/>
+        <p class="foot-tagline">Love From Nona</p>
+        <p class="foot-tag">Thoughtfully crafted feminine fashion<br>for every chapter of your everyday life.</p>
+      </div>
+      <div>
+        <p class="foot-h">Collection</p>
+        <button class="foot-lnk" onclick="openProduct('aluna-pleats')">Aluna Pleats</button>
+        <button class="foot-lnk" onclick="openProduct('naya-pleats')">Naya Pleats</button>
+      </div>
+      <div>
+        <p class="foot-h">Customer Care</p>
+        <button class="foot-lnk" onclick="showInfoModal('shipping')">Shipping</button>
+        <button class="foot-lnk" onclick="showInfoModal('payment')">Payment</button>
+        <button class="foot-lnk" onclick="showInfoModal('faq')">FAQ</button>
+        <a class="foot-lnk" href="https://wa.me/62816660415" target="_blank" rel="noopener">WhatsApp Admin</a>
+      </div>
+      <div>
+        <p class="foot-h">Follow Us</p>
+        <a class="foot-lnk" href="https://instagram.com/wearsnona" target="_blank" rel="noopener">Instagram</a>
+        <a class="foot-lnk" href="https://tiktok.com/@wearsnona" target="_blank" rel="noopener">TikTok</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span class="foot-copy">© 2025 Wears Nona. All rights reserved.</span>
+      <span class="foot-copy">Admin WhatsApp: +62 816-6604-15</span>
+      <span class="foot-copy">Bandung, Indonesia 🤍</span>
+    </div>
+  </footer>
+
+</main><!-- /page-home -->
+
+<!-- ══════════════════════════════════════
+  PAGE — PRODUCT DETAIL
+══════════════════════════════════════ -->
+<div class="page" id="page-product" role="main">
+  <div class="pdp-layout">
+
+    <!-- GALLERY COL -->
+    <div class="gal-col">
+      <!-- Desktop -->
+      <div class="gal-desk">
+        <div class="gal-thumbs" id="gal-thumbs" role="list" aria-label="Product photos"></div>
+        <div class="gal-main">
+          <img class="gal-main-img" id="gal-main-img" src="" alt=""/>
+          <button class="gal-arr gal-arr-l" onclick="galStep(-1)" aria-label="Previous photo">
+            <svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L2 7.5l5.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="gal-arr gal-arr-r" onclick="galStep(1)" aria-label="Next photo">
+            <svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M1.5 1.5L7 7.5l-5.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <!-- Mobile -->
+      <div class="gal-mob">
+        <div class="gal-swipe" id="gal-swipe" role="list"></div>
+        <div class="gal-dots" id="gal-dots" role="tablist"></div>
+      </div>
+    </div>
+
+    <!-- INFO COL -->
+    <div class="pdp-info">
+
+      <button class="pdp-back-btn" onclick="goHome()" aria-label="Go back">← Back</button>
+
+      <div class="pdp-crumb" aria-label="Breadcrumb">
+        <button onclick="goHome()">Home</button>
+        <span class="crumb-sep" aria-hidden="true">›</span>
+        <button onclick="goHome()">Collection</button>
+        <span class="crumb-sep" aria-hidden="true">›</span>
+        <span id="pdp-crumb-name"></span>
+      </div>
+
+      <p class="pdp-tag" id="pdp-tag"></p>
+      <h1 class="pdp-h1" id="pdp-h1"></h1>
+
+      <div class="pdp-price-row">
+        <span class="pdp-price-old" id="pdp-price-old"></span>
+        <span class="pdp-price" id="pdp-price"></span>
+        <span class="pdp-stock-badge" id="pdp-stock-badge"></span>
+      </div>
+      <div class="pdp-promo-tags">
+        <span class="promo-tag">Special Launch Price</span>
+        <span class="promo-tag ship">🚚 Free Shipping</span>
+      </div>
+
+      <div class="pdp-div"></div>
+
+      <!-- Wishlist -->
+      <button class="wishlist-btn" id="wishlist-toggle-btn" onclick="toggleWishlistItem()" aria-label="Add to wishlist">
+        <svg width="15" height="14" viewBox="0 0 18 17" fill="none">
+          <path d="M9 15.5S1 10.5 1 5a4 4 0 018 0 4 4 0 018 0c0 5.5-8 10.5-8 10.5z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span id="wishlist-btn-label">Save to Wishlist</span>
+      </button>
+
+      <div class="pdp-div"></div>
+
+      <!-- Size selector -->
+      <div class="var-hd">
+        <span>Size</span>
+        <button class="size-chart-link" onclick="openSizeChart()" aria-label="View size chart">
+          View Size Chart ↗
+        </button>
+      </div>
+      <div class="pills" id="size-pills" role="radiogroup" aria-label="Select size"></div>
+
+      <!-- Qty -->
+      <div class="var-hd" style="margin-top:.5rem;">
+        <span>Quantity</span>
+        <span class="stock-hint" id="stock-hint"></span>
+      </div>
+      <div class="qty-row">
+        <div class="qty-box" role="group" aria-label="Quantity selector">
+          <button class="qbtn" onclick="adjQty(-1)" aria-label="Decrease quantity">−</button>
+          <span class="qval" id="qty-val" aria-live="polite">1</span>
+          <button class="qbtn" onclick="adjQty(1)" aria-label="Increase quantity">+</button>
+        </div>
+      </div>
+
+      <button class="atc-btn" id="atc-btn" onclick="doAddToCart()">Add to Cart</button>
+
+      <div class="pdp-div"></div>
+
+      <!-- Accordion -->
+      <div role="list">
+        <div class="acc-row" onclick="togAcc(this)" role="button" tabindex="0"
+             onkeydown="if(event.key==='Enter')togAcc(this)" aria-expanded="false">
+          <span class="acc-key">Description</span>
+          <span class="acc-ico" aria-hidden="true">+</span>
+        </div>
+        <div class="acc-body" id="acc-desc-body" role="region"></div>
+
+        <div class="acc-row" onclick="togAcc(this)" role="button" tabindex="0"
+             onkeydown="if(event.key==='Enter')togAcc(this)" aria-expanded="false">
+          <span class="acc-key">Details</span>
+          <span class="acc-ico" aria-hidden="true">+</span>
+        </div>
+        <div class="acc-body" role="region">
+          <strong class="acc-sub-h">Details</strong>
+          <ul class="acc-list">
+            <li>Premium chiffon ceruty</li>
+            <li>Full inner lining (not see-through)</li>
+            <li>Soft &amp; breathable</li>
+            <li>Beautiful drape</li>
+            <li>Lightweight and comfortable</li>
+            <li>Suitable for daily wear and special occasions</li>
+          </ul>
+          <strong class="acc-sub-h">Detail Produk</strong>
+          <ul class="acc-list">
+            <li>Premium chiffon ceruty</li>
+            <li>Full furing (tidak menerawang)</li>
+            <li>Lembut &amp; adem</li>
+            <li>Jatuh &amp; flowy</li>
+            <li>Nyaman dipakai seharian</li>
+          </ul>
+        </div>
+
+        <div class="acc-row" onclick="togAcc(this)" role="button" tabindex="0"
+             onkeydown="if(event.key==='Enter')togAcc(this)" aria-expanded="false">
+          <span class="acc-key">Shipping</span>
+          <span class="acc-ico" aria-hidden="true">+</span>
+        </div>
+        <div class="acc-body" role="region">
+          Ships from Bandung. Orders are processed within 1–2 business days after
+          payment confirmation. Regular shipping available nationwide via JNE, J&amp;T,
+          and SiCepat. Same-day delivery available in certain areas — please confirm
+          via WhatsApp before ordering.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><!-- /page-product -->
+
+<!-- ══════════════════════════════════════
+  PAGE — CART / CHECKOUT
+══════════════════════════════════════ -->
+<div class="page" id="page-cart" role="main">
+
+  <nav class="cart-nav" aria-label="Checkout navigation">
+    <button class="cart-back" onclick="goBack()" aria-label="Go back">← Back</button>
+    <span class="cart-brand" aria-label="Wears Nona">wears.<em>nona</em></span>
+    <span style="width:80px"></span>
+  </nav>
+
+  <!-- Progress bar -->
+  <div class="checkout-progress" aria-label="Checkout progress" role="progressbar" aria-valuenow="2" aria-valuemin="1" aria-valuemax="3">
+    <div class="cp-step done">
+      <div class="cp-dot"></div>
+      <span>Cart</span>
+    </div>
+    <div class="cp-line"></div>
+    <div class="cp-step active">
+      <div class="cp-dot"></div>
+      <span>Details</span>
+    </div>
+    <div class="cp-line"></div>
+    <div class="cp-step">
+      <div class="cp-dot"></div>
+      <span>Confirm</span>
+    </div>
+  </div>
+
+  <div class="cart-body">
+
+    <!-- LEFT COL -->
+    <div class="cart-left">
+
+      <!-- Cart items -->
+      <div class="cpanel">
+        <div class="cpanel-h">
+          Your Cart
+          <span class="cpanel-count" id="cart-item-count">0 items</span>
+        </div>
+        <div id="cart-items" aria-live="polite"></div>
+      </div>
+
+      <!-- Customer info -->
+      <div class="cpanel">
+        <div class="cpanel-h">Your Details</div>
+        <div class="fld-row">
+          <div class="fld">
+            <label for="f-nama">Full Name <span class="req">*</span></label>
+            <input id="f-nama" type="text" placeholder="Your full name" autocomplete="name" required/>
+          </div>
+          <div class="fld">
+            <label for="f-hp">WhatsApp Number <span class="req">*</span></label>
+            <input id="f-hp" type="tel" placeholder="08xxxxxxxxxx" autocomplete="tel" required/>
+          </div>
+        </div>
+        <div class="fld">
+          <label for="f-alamat">Shipping Address <span class="req">*</span></label>
+          <textarea id="f-alamat" placeholder="Street, district, city" autocomplete="street-address" required></textarea>
+        </div>
+        <div class="fld-row">
+          <div class="fld">
+            <label for="f-kodepos">Postal Code <span class="req">*</span></label>
+            <input id="f-kodepos" type="text" placeholder="40000" maxlength="5" autocomplete="postal-code" required/>
+          </div>
+          <div class="fld">
+            <label for="f-catatan">Notes <span style="opacity:.5;font-size:.9em;">(optional)</span></label>
+            <input id="f-catatan" type="text" placeholder="Special requests…"/>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COL -->
+    <div class="cart-right">
+
+      <!-- Payment -->
+      <div class="cpanel">
+        <div class="cpanel-h">Payment Method</div>
+
+        <div class="payment-deadline" id="payment-deadline" style="display:none">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Complete payment within <strong>24 hours</strong> to secure your order.
+        </div>
+
+        <div class="pay-methods">
+          <div class="pay-opt" onclick="selPay('blu',this)" role="button" tabindex="0"
+               onkeydown="if(event.key==='Enter')selPay('blu',this)">
+            <div class="pay-opt-name">BLU</div>
+            <div class="pay-opt-sub">by BCA Digital</div>
+          </div>
+          <div class="pay-opt" onclick="selPay('seabank',this)" role="button" tabindex="0"
+               onkeydown="if(event.key==='Enter')selPay('seabank',this)">
+            <div class="pay-opt-name">SeaBank</div>
+            <div class="pay-opt-sub">Bank Transfer</div>
+          </div>
+        </div>
+
+        <div class="pay-info" id="pi-blu">
+          <div class="pay-detail-inner">
+            <div>
+              <div class="pay-bank-name">BLU by BCA Digital</div>
+              <div class="pay-acc-num" id="blu-num">090139820956</div>
+              <div class="pay-acc-holder">a.n. Dena Resti</div>
+            </div>
+            <button class="copy-btn" onclick="copyNum('090139820956')" aria-label="Copy BLU account number">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <div class="pay-info" id="pi-seabank">
+          <div class="pay-detail-inner">
+            <div>
+              <div class="pay-bank-name">SeaBank</div>
+              <div class="pay-acc-num">901945376335</div>
+              <div class="pay-acc-holder">a.n. Dena Resti</div>
+            </div>
+            <button class="copy-btn" onclick="copyNum('901945376335')" aria-label="Copy SeaBank account number">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <!-- Upload proof -->
+        <div class="fld" style="margin-top:1.1rem;">
+          <label>Transfer Proof <span class="req">*</span></label>
+          <div class="upzone" id="upzone" role="button" tabindex="0"
+               onkeydown="if(event.key==='Enter')document.getElementById('proof-file').click()"
+               aria-label="Upload transfer proof">
+            <input type="file" id="proof-file" accept="image/*"
+                   onchange="handleProof(this.files[0])"/>
+            <div class="up-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+              </svg>
+            </div>
+            <div class="up-txt">Click or drag &amp; drop</div>
+            <div class="up-sub">JPG, PNG · max 5MB</div>
+          </div>
+          <div id="proof-wrap" style="display:none;">
+            <img id="proof-preview-img" src="" alt="Transfer proof preview"/>
+            <button class="proof-rm" onclick="clearProof()" aria-label="Remove transfer proof">✕</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="cpanel" id="order-summary-panel">
+        <div class="cpanel-h">Order Summary</div>
+        <div id="sum-lines"></div>
+        <div class="sum-div"></div>
+        <div class="sum-row">
+          <span>Shipping</span>
+          <span class="sum-note">Confirmed via WhatsApp</span>
+        </div>
+        <div class="sum-div"></div>
+        <div class="sum-total">
+          <span>Total</span>
+          <span id="sum-total-val">Rp 0</span>
+        </div>
+        <button class="submit-btn" id="submit-btn" onclick="submitOrder()">
+          Place Order  →
+        </button>
+        <p class="submit-note">
+          By placing your order, you agree to our terms &amp; conditions.
+          Order expires if payment is not received within 24 hours.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div><!-- /page-cart -->
+
+<!-- ══════════════════════════════════════
+  SUCCESS MODAL
+══════════════════════════════════════ -->
+<div id="success" role="dialog" aria-modal="true" aria-label="Order confirmed">
+  <div class="scard">
+    <div class="s-check" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6L9 17l-5-5"/>
+      </svg>
+    </div>
+    <h2 class="s-title">Thank you for your order. 🤍</h2>
+    <p class="s-sub">
+      Your order has been received successfully.<br>
+      Our team will verify your payment and contact you via WhatsApp during our operating hours.
+    </p>
+    <div class="s-box">
+      <div class="s-oid" id="s-oid">—</div>
+      <div class="s-deadline">Please complete your payment within <strong>24 hours.</strong></div>
+    </div>
+    <p class="s-wa">
+      Questions? Chat our admin on WhatsApp
+      <a href="https://wa.me/62816660415" target="_blank" rel="noopener">+62 816-6604-15</a>
+    </p>
+    <button class="s-btn" onclick="resetAll()">Back to Home</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  INFO MODAL (Shipping / Payment / FAQ)
+══════════════════════════════════════ -->
+<div id="info-modal" role="dialog" aria-modal="true" onclick="closeInfoModal(event)">
+  <div class="info-modal-box">
+    <button class="info-modal-close" onclick="closeInfoModal()" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <h3 class="info-modal-title" id="info-modal-title"></h3>
+    <div class="info-modal-body" id="info-modal-body"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
